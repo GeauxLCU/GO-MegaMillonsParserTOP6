@@ -1,0 +1,47 @@
+import re
+from collections import Counter
+
+# read in html file
+with open("file.html") as f:
+    html_text = f.read()
+
+# define regex patterns to find desired elements
+pattern1 = r'<li class="ball pastNum1">(\d+)</li>'
+pattern2 = r'</li><li class="ball pastNum2">(\d+)</li>'
+pattern3 = r'<li class="ball pastNum3">(\d+)</li>'
+pattern4 = r'<li class="ball pastNum4">(\d+)</li>'
+pattern5 = r'</li><li class="ball pastNum5">(\d+)</li>'
+pattern6 = r'<li class="ball yellowBall pastNumMB">(\d+)</li>'
+
+# find all occurrences of each pattern
+matches1 = re.findall(pattern1, html_text)
+matches2 = re.findall(pattern2, html_text)
+matches3 = re.findall(pattern3, html_text)
+matches4 = re.findall(pattern4, html_text)
+matches5 = re.findall(pattern5, html_text)
+matches6 = re.findall(pattern6, html_text)
+
+# calculate modes for each variable
+mode1 = Counter(matches1).most_common(1)
+mode2 = Counter(matches2).most_common(1)
+mode3 = Counter(matches3).most_common(1)
+mode4 = Counter(matches4).most_common(1)
+mode5 = Counter(matches5).most_common(1)
+mode6 = Counter(matches6).most_common(1)
+
+# calculate percentages
+total_matches = len(matches1) + len(matches2) + len(matches3) + len(matches4) + len(matches5) + len(matches6)
+mode1_percent = round(mode1[0][1] / total_matches * 100, 2)
+mode2_percent = round(mode2[0][1] / total_matches * 100, 2)
+mode3_percent = round(mode3[0][1] / total_matches * 100, 2)
+mode4_percent = round(mode4[0][1] / total_matches * 100, 2)
+mode5_percent = round(mode5[0][1] / total_matches * 100, 2)
+mode6_percent = round(mode6[0][1] / total_matches * 100, 2)
+
+# print results
+print(f"Mode for <li class='ball pastNum1'>: {mode1[0][0]}, {mode1_percent}%")
+print(f"Mode for </li><li class='ball pastNum2'>: {mode2[0][0]}, {mode2_percent}%")
+print(f"Mode for <li class='ball pastNum3'>: {mode3[0][0]}, {mode3_percent}%")
+print(f"Mode for <li class='ball pastNum4'>: {mode4[0][0]}, {mode4_percent}%")
+print(f"Mode for </li><li class='ball pastNum5'>: {mode5[0][0]}, {mode5_percent}%")
+print(f"Mode for <li class='ball yellowBall pastNumMB'>: {mode6[0][0]}, {mode6_percent}%")
