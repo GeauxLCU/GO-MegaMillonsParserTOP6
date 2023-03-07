@@ -1,0 +1,19 @@
+from collections import Counter
+from bs4 import BeautifulSoup
+
+# Open the HTML file and load its contents into Beautiful Soup
+with open("file.html") as file:
+    soup = BeautifulSoup(file, "html.parser")
+
+# Find all elements with the given class names
+elements = {}
+class_names = ["ball pastNum1", "ball pastNum2", "ball pastNum3", "ball pastNum4", "ball pastNum5", "ball yellowBall pastNumMB"]
+for class_name in class_names:
+    elements[class_name] = soup.find_all("li", class_=class_name)
+
+# Find the mode and frequency percentage for each set of elements
+for class_name in class_names:
+    counts = Counter(elem.text.strip() for elem in elements[class_name])
+    mode, count = counts.most_common(1)[0]
+    percentage = count / len(elements[class_name]) * 100
+    print(f"Mode for {class_name}: {mode}, {percentage:.2f}% frequency")
